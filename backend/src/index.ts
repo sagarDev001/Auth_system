@@ -14,7 +14,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://majestic-toffee-0d6f3a.netlify.app/login',
   credentials: true,
 }));
 app.use(express.json());
