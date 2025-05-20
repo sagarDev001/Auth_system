@@ -13,8 +13,15 @@ dotenv.config();
 const app = express();
 
 // Middleware
+// app.use(cors({
+//   origin: 'https://majestic-toffee-0d6f3a.netlify.app/login',
+//   credentials: true,
+// }));
 app.use(cors({
-  origin: 'https://majestic-toffee-0d6f3a.netlify.app/login',
+  origin: [
+    'http://localhost:5173',
+    'https://majestic-toffee-0d6f3a.netlify.app/login',
+  ],
   credentials: true,
 }));
 app.use(express.json());
