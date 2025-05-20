@@ -16,6 +16,9 @@ node_modules/
 # Production build
 /build
 /dist
+**/dist
+frontend/dist/
+backend/dist/
 
 # Debug logs
 npm-debug.log*

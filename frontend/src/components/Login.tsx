@@ -66,7 +66,7 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleGoogleLogin = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleGoogleLogin = () => {
     setGoogleLoading(true);
     // Let the browser follow the link
   };

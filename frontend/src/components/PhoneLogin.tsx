@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, TextField, Button, Typography, Box, Alert } from '@mui/material';
 import axios from 'axios';
-import { useAuth } from '../contexts/AuthContext';
 import { useSnackbar } from 'notistack';
 import API_ENDPOINTS from '../config/api';
+import { useAuth } from '../contexts/AuthContext';
 
 const PhoneLogin: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -14,8 +14,8 @@ const PhoneLogin: React.FC = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
-  const { loginWithOtp } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
+  const { loginWithOtp } = useAuth();
 
   const handleRequestOTP = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,8 +41,7 @@ const PhoneLogin: React.FC = () => {
     setSuccess('');
     setLoading(true);
     try {
-      const response = await axios.post(API_ENDPOINTS.VERIFY_OTP, { phone, otp });
-      localStorage.setItem('token', response.data.token);
+      await loginWithOtp(phone, otp);
       enqueueSnackbar('Login successful!', { variant: 'success' });
       navigate('/dashboard');
     } catch (error: any) {
