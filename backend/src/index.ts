@@ -20,7 +20,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    "https://spiffy-pony-c1dda2.netlify.app"
+    "https://dapper-biscochitos-fd7018.netlify.app"
   ],
   credentials: true,
 }));
