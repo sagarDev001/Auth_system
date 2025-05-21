@@ -20,7 +20,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://majestic-toffee-0d6f3a.netlify.app/login',
+    "https://spiffy-pony-c1dda2.netlify.app"
   ],
   credentials: true,
 }));
