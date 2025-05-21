@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { signup, login, requestPasswordReset, resetPassword, requestOtp, verifyOtp } from '../controllers/authController';
 import passport from '../config/passport';
 import jwt from 'jsonwebtoken';
@@ -6,13 +6,13 @@ import User from '../models/User';
 
 const router = express.Router();
 
-router.post('/signup', signup);
-router.post('/login', login);
-router.post('/request-reset', requestPasswordReset);
-router.post('/reset-password', resetPassword);
-router.post('/request-otp', requestOtp);
-router.post('/verify-otp', verifyOtp);
-router.post('/logout', (req, res) => {
+router.post('/signup', (req: Request, res: Response) => signup(req, res));
+router.post('/login', (req: Request, res: Response) => login(req, res));
+router.post('/request-reset', (req: Request, res: Response) => requestPasswordReset(req, res));
+router.post('/reset-password', (req: Request, res: Response) => resetPassword(req, res));
+router.post('/request-otp', (req: Request, res: Response) => requestOtp(req, res));
+router.post('/verify-otp', (req: Request, res: Response) => verifyOtp(req, res));
+router.post('/logout', (req: Request, res: Response) => {
   res.clearCookie('token', {
     httpOnly: true,
     secure: false, // for local dev
@@ -23,16 +23,16 @@ router.post('/logout', (req, res) => {
 });
 
 // Google OAuth routes with debug logs
-router.get('/google', (req, res, next) => {
+router.get('/google', (req: Request, res: Response, next: NextFunction) => {
   next();
 }, passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/google/callback', (req, res, next) => {
+router.get('/google/callback', (req: Request, res: Response, next: NextFunction) => {
   next();
 }, passport.authenticate('google', {
   session: false,
   failureRedirect: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=Bad%20Request`
-}), (req, res) => {
+}), (req: Request, res: Response) => {
   const user = req.user as import('../models/User').IUser;
   if (!user) {
     return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=Authentication%20failed`);
@@ -49,7 +49,7 @@ router.get('/google/callback', (req, res, next) => {
   res.redirect(process.env.FRONTEND_URL || 'http://localhost:5173/dashboard');
 });
 
-router.get('/me', async (req, res) => {
+router.get('/me', async (req: Request, res: Response) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ message: 'Not authenticated' });
   try {
