@@ -8,8 +8,7 @@ import { Vonage } from '@vonage/server-sdk';
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  // secure: false, // for local dev
-  secure: process.env.NODE_ENV === 'production',
+  secure: false, // for local dev
   sameSite: 'lax' as const,
   path: '/',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
